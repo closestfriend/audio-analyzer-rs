@@ -17,6 +17,9 @@
 // We use the directory approach since analysis will have multiple files.
 pub mod analysis;
 
+// Machine-readable JSON report (used by `cli --json`).
+pub mod report;
+
 // ---- Imports ----
 // `use` brings items into scope. The `::` is Rust's path separator (like `.` in Python).
 // Symphonia is organised into sub-crates (core, default).

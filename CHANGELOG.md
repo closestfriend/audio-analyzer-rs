@@ -1,5 +1,13 @@
 # Changelog
 
+## [Unreleased]
+
+### Added
+- **`cli --json`** — machine-readable output for the standalone CLI. Runs the same pipeline as the
+  `full_analysis` MCP tool and prints one JSON document, so GUIs and scripts see exactly the numbers
+  Claude sees. Includes `file.effective_bandwidth_hz` so consumers can flag lossy-codec low-pass
+  (which otherwise reads as a brilliance-band mix property). Options `--fps`, `--start`, `--end`.
+
 ## [1.0.0] - 2026-03-13
 
 Claude can hear music now.

@@ -19,8 +19,52 @@ fn main() {
 
     if args.len() < 2 {
         println!("Usage: cli <audio_file>");
+        println!("       cli --json <audio_file> [--fps N] [--start S] [--end S]");
         println!("       cli compare <file_a> <file_b>");
         std::process::exit(1);
+    }
+
+    // Machine-readable mode: cli --json <file> [--fps N] [--start S] [--end S]
+    // Prints one JSON document to stdout; errors go to stderr as JSON with exit code 1.
+    if args[1] == "--json" {
+        let mut opts = audio_visualizer_rs::report::ReportOptions::default();
+        let mut file: Option<&String> = None;
+        let mut i = 2;
+        while i < args.len() {
+            let value = args.get(i + 1).and_then(|v| v.parse::<f32>().ok());
+            match (args[i].as_str(), value) {
+                ("--fps", Some(v)) => {
+                    opts.fps = v;
+                    i += 2;
+                }
+                ("--start", Some(v)) => {
+                    opts.start_time = Some(v);
+                    i += 2;
+                }
+                ("--end", Some(v)) => {
+                    opts.end_time = Some(v);
+                    i += 2;
+                }
+                _ => {
+                    file = Some(&args[i]);
+                    i += 1;
+                }
+            }
+        }
+        let result = match file {
+            Some(f) => audio_visualizer_rs::report::full_report(f, &opts),
+            None => {
+                Err("Usage: cli --json <audio_file> [--fps N] [--start S] [--end S]".to_string())
+            }
+        };
+        match result {
+            Ok(report) => println!("{}", report),
+            Err(e) => {
+                eprintln!("{}", serde_json::json!({ "error": e }));
+                std::process::exit(1);
+            }
+        }
+        return;
     }
 
     // A/B comparison mode

@@ -88,7 +88,14 @@ Restart Claude Desktop. The audio analysis tools will be available in your conve
 ```bash
 cargo run --bin cli -- /path/to/song.mp3
 cargo run --bin cli -- compare /path/to/mix_v1.mp3 /path/to/mix_v2.mp3
+cargo run --bin cli -- --json /path/to/song.mp3 > song.json   # machine-readable, for GUIs and scripts
 ```
+
+`--json` runs the same analysis as the `full_analysis` MCP tool and prints one JSON document
+(`schema_version`, `file`, `spectral`, `harmonic`, `rhythm`, `percussive`, `dynamics`, `loudness`,
+`masking`, `stereo`, `sections`, `timeseries`). Options: `--fps N` time-series points per second
+(default 2, `0` to omit), `--start S` / `--end S` to analyse a slice. Errors go to stderr as
+`{"error": "..."}` with exit code 1.
 
 ### MCP tools
 
