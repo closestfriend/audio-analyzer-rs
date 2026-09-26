@@ -276,12 +276,10 @@ pub fn format_stereo_summary(summary: &StereoSummary, source_channels: u32) -> S
         } else {
             "slightly left"
         }
+    } else if summary.avg_balance > 0.0 {
+        "right-heavy"
     } else {
-        if summary.avg_balance > 0.0 {
-            "right-heavy"
-        } else {
-            "left-heavy"
-        }
+        "left-heavy"
     };
     out.push_str(&format!(
         "Balance:             {:.3} — {}\n",
