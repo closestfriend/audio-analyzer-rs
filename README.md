@@ -1,6 +1,6 @@
 # audio_visualizer_rs
 
-**An MCP server that gives Claude the ability to hear music.**
+**An MCP server that gives coding agents like Claude the ability to hear music.**
 
 Point Claude at any audio file and it can tell you the key, tempo, dynamics, timbre, percussive character, stereo field, structural sections, and how the music evolves over time -- all from raw audio analysis, no images, no guessing, under 1% context window usage.
 
